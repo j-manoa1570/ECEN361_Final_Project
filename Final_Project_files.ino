@@ -2,10 +2,12 @@
 //
 //  Final Project for ECEN 361 v .9 (build 26)
 //
-//  As of 5 Jul 2017, All code has been written by Jonathan Manoa
+//  As of 12 Jul 2017, most code has been written by Jonathan Manoa
 //  change() was based off of the fade example sketch. Kace Chandler
 //  helped with understand concepts with using serial reads and other
-//  neat things.
+//  neat things. Colby Robbins added Laudio, Raudio, maxAudioValue
+//  definitions; input variables section; getPPMsample() function;
+//  and fade code in loop() function.
 //
 //  This code is set to be ran on an Arduino Uno. 
 //  Make sure to set the baud rate (basically serial monitor refresh
@@ -186,9 +188,6 @@ void setup() {
   analogReference(INTERNAL); //set the ADC reference voltage to internal reference
   pinMode(Laudio, INPUT);
   pinMode(Raudio, INPUT);
-  //pinMode(10, OUTPUT);
-  //ADCSRA = 0xf5;
-  //Serial.begin(19200);
 
   // places a value on the button
   digitalWrite(MODEMINUS, HIGH);
@@ -231,12 +230,7 @@ void loop() {
     // This is to debounced the button
     while (digitalRead(MODEPLUS) == LOW) {}
 
-  // Get input from serial port
- // while (Serial.available() > 0) {
- //   input = Serial.read();
- // }
      getPPMsample();
-   // Serial.println(fade);
     if(dBAudio >= fade) //fade the LED value unless input is higher
     {
       fade = dBAudio;
